@@ -1,1 +1,65 @@
-<p>dinamicos works!</p>
+<h2>Template: <small>Dinámicos</small></h2>
+<hr>
+
+<form (ngSubmit)="guardar()" autocomplete="off" #miFormulario="ngForm">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Nombre</label>
+        <div class="col-sm-9">
+            <input type="text" 
+            class="form-control"
+            [ngModel]="persona.nombre"
+            name="nombre" 
+            placeholder="Nombre de la persona"
+            required>
+            <span class="form-text text-danger" *ngIf="miFormulario.touched && miFormulario.controls['nombre']?.errors"
+            >Este campo es obligatorio</span
+          >
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <button type="button"
+                    class="btn btn-primary float-end"
+                    (click)="guardar()"
+                    [disabled]="miFormulario.invalid">Guardar</button>
+        </div>
+    </div>
+    <div class="row mt-3 mb-3">
+        <label class="col-sm-3 col-form-label">Agregar</label>
+        <div class="col-sm-9">
+            <div class="input-group">
+                <input type="text" 
+                class="form-control"
+                placeholder="agregar favorito"
+                [(ngModel)]="nuevoJuego"
+                name="nuevoJuego"
+                (keyup.enter)="agregarJuego()">
+                <button class="btn btn-outline-primary" 
+                        type="button"
+                        (click)="agregarJuego()">agregar
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-9">
+            <div class="input-group mb-1"
+                *ngFor="let favorito of persona.favoritos; let i = index">
+                <input  
+                [(ngModel)]="favorito.nombre"
+                name="favorito_{{i}}"
+                type="text" class="form-control"
+                required>
+                <button class="btn btn-outline-danger" 
+                            type="button"
+                            (click)="eliminar(i)">eliminar
+                    </button>
+                </div>
+        </div>
+    </div>
+</form>
+
+<span>Persona</span>
+    <pre>{{ persona | json }} </pre>
